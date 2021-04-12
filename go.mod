@@ -1,4 +1,4 @@
-module xzbase
+module github.com/tenny1225/xzbase
 
 go 1.13
 
