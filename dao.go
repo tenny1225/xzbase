@@ -39,7 +39,7 @@ type modelDao struct {
 }
 var db *mongo.Database
 
-func Init(databse *mongo.Database){
+func InitDB(databse *mongo.Database){
 	db = databse
 }
 
