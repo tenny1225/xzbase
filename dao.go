@@ -37,11 +37,7 @@ type modelDao struct {
 	Ctx       context.Context
 	TableName string
 }
-var db *mongo.Database
 
-func InitDB(databse *mongo.Database){
-	db = databse
-}
 
 func NewModelDao(tableName string) ModelDao {
 	return &modelDao{Ctx: context.Background(), TableName: tableName}
