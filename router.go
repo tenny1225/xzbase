@@ -81,7 +81,10 @@ func (r *RouteFunc) Handle() func(*gin.Context) {
 
 			control := ptrValue.Interface().(Controller)
 			control.SetContext(c)
-			ptrValue.Elem().FieldByName("Service").Set(valueController.Elem().FieldByName("Service"))
+			if _,ok:=ptrType.Elem().FieldByName("Service");ok{
+				ptrValue.Elem().FieldByName("Service").Set(valueController.Elem().FieldByName("Service"))
+			}
+
 
 			values := ptrValue.MethodByName(r.methodName).Call(params)
 
