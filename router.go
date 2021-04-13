@@ -166,12 +166,16 @@ func writeJson(writer gin.ResponseWriter, obj response) {
 func AddRoute(r *gin.Engine, i Controller,s Service) {
 	o := reflect.ValueOf(i)
 	value := reflect.TypeOf(i)
-	if _, ok := value.Elem().FieldByName("Service"); ok &&s!=nil{
-		values := reflect.ValueOf(s).Call(nil)
-		if values != nil && len(values) > 0 {
-			o.Elem().FieldByName("Service").Set(values[0])
+	elem:=value.Elem()
+	if elem!=nil{
+		if _, ok := elem.FieldByName("Service"); ok &&s!=nil{
+			values := reflect.ValueOf(s).Call(nil)
+			if values != nil && len(values) > 0 {
+				o.Elem().FieldByName("Service").Set(values[0])
+			}
 		}
 	}
+
 	name := strings.ToLower(strings.ReplaceAll(strings.Split(value.String(), ".")[1], "Controller", ""))
 
 	rg := r.Group(name)
