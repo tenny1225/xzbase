@@ -24,7 +24,7 @@ type RouteFunc struct {
 	params     []string
 	method     reflect.Value
 	methodName string
-	controller Controller
+	controller controller
 	returnType int
 }
 
@@ -79,8 +79,8 @@ func (r *RouteFunc) Handle() func(*gin.Context) {
 
 			ptrValue := reflect.New(trueType) //返回对象的指针对应的reflect.Value
 
-			control := ptrValue.Interface().(Controller)
-			control.SetContext(c)
+			control := ptrValue.Interface().(controller)
+			control.setContext(c)
 			if _,ok:=ptrType.Elem().FieldByName("Service");ok{
 				ptrValue.Elem().FieldByName("Service").Set(valueController.Elem().FieldByName("Service"))
 			}
@@ -166,7 +166,7 @@ func writeJson(writer gin.ResponseWriter, obj response) {
 }
 
 
-func AddRoute(r *gin.Engine, i Controller,s Service) {
+func AddRoute(r *gin.Engine, i controller,s Service) {
 	o := reflect.ValueOf(i)
 	value := reflect.TypeOf(i)
 	elem:=value.Elem()
