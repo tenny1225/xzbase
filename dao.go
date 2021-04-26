@@ -33,50 +33,50 @@ type ModelDao interface {
 	All(m interface{}) error
 	Begin() *mongo.Collection
 }
-type modelDao struct {
+type BaseDao struct {
 	Ctx       context.Context
 	TableName string
 }
 
 
 func NewModelDao(tableName string) ModelDao {
-	return &modelDao{Ctx: context.Background(), TableName: tableName}
+	return &BaseDao{Ctx: context.Background(), TableName: tableName}
 }
 
-func (d *modelDao) Create(m interface{}) error {
+func (d *BaseDao) Create(m interface{}) error {
 	_, e := d.Begin().InsertOne(d.Ctx, m)
 	return e
 }
 
-func (d *modelDao) UpdateMany(id string, m interface{}) error {
+func (d *BaseDao) UpdateMany(id string, m interface{}) error {
 	d.ForceDelete(id)
 	return d.Create(m)
 }
 
-func (d *modelDao) Update(id string, m map[string]interface{}) error {
+func (d *BaseDao) Update(id string, m map[string]interface{}) error {
 	m["model.updatedAt"] = time.Now()
 	_, e := d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$set": m})
 
 	return e
 }
-func (d *modelDao) Inc(id string, m map[string]interface{}) error {
+func (d *BaseDao) Inc(id string, m map[string]interface{}) error {
 	_, e := d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$inc": m})
 
 	return e
 }
-func (d *modelDao) Pull(id string, m map[string]interface{}) error {
+func (d *BaseDao) Pull(id string, m map[string]interface{}) error {
 	var e error
 
 	_, e = d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$pull": m})
 
 	return e
 }
-func (d *modelDao) Push(id string, m map[string]interface{}) error {
+func (d *BaseDao) Push(id string, m map[string]interface{}) error {
 	_, e := d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$push": m})
 
 	return e
 }
-func (d *modelDao) Save(m interface{}, filter map[string]interface{}) error {
+func (d *BaseDao) Save(m interface{}, filter map[string]interface{}) error {
 	f := bson.M{}
 
 	for k, v := range filter {
@@ -88,21 +88,21 @@ func (d *modelDao) Save(m interface{}, filter map[string]interface{}) error {
 	}
 	return d.Create(m)
 }
-func (d *modelDao) Delete(id string) error {
+func (d *BaseDao) Delete(id string) error {
 	_, e := d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$set": bson.M{
 		"model.deletedAt": time.Now(),
 	}})
 	return e
 }
-func (d *modelDao) DeleteByMany(m map[string]interface{}) error {
+func (d *BaseDao) DeleteByMany(m map[string]interface{}) error {
 	_, e := d.Begin().DeleteMany(d.Ctx, m)
 	return e
 }
-func (d *modelDao) ForceDelete(id string) error {
+func (d *BaseDao) ForceDelete(id string) error {
 	_, e := d.Begin().DeleteOne(d.Ctx, bson.M{"model.id": id})
 	return e
 }
-func (d *modelDao) ForceDeleteByMany(m map[string]interface{}) error {
+func (d *BaseDao) ForceDeleteByMany(m map[string]interface{}) error {
 	filter := bson.M{}
 	for k, v := range m {
 		filter[k] = v
@@ -111,20 +111,20 @@ func (d *modelDao) ForceDeleteByMany(m map[string]interface{}) error {
 	_, e := d.Begin().DeleteMany(d.Ctx, filter)
 	return e
 }
-func (d *modelDao) GetOneOrder(m interface{}, key string, order int) error {
+func (d *BaseDao) GetOneOrder(m interface{}, key string, order int) error {
 	opts := options.FindOne()
 	opts.SetSort(bson.D{{Key: key, Value: order}})
 	return d.Begin().FindOne(d.Ctx, bson.M{}, opts).Decode(m)
 }
-func (d *modelDao) Get(m interface{}, id string) error {
+func (d *BaseDao) Get(m interface{}, id string) error {
 
 	return d.Begin().FindOne(d.Ctx, bson.M{"model.id": id}).Decode(m)
 }
-func (d *modelDao) GetBy(m interface{}, key, value string) error {
+func (d *BaseDao) GetBy(m interface{}, key, value string) error {
 
 	return d.Begin().FindOne(d.Ctx, bson.M{key: value}).Decode(m)
 }
-func (d *modelDao) GetManyBy(m interface{}, key, value string) error {
+func (d *BaseDao) GetManyBy(m interface{}, key, value string) error {
 
 	c, e := d.Begin().Find(d.Ctx, bson.M{key: value})
 
@@ -133,7 +133,7 @@ func (d *modelDao) GetManyBy(m interface{}, key, value string) error {
 	}
 	return c.All(d.Ctx, m)
 }
-func (d *modelDao) GetManyByMany(m interface{}, filter map[string]interface{}) error {
+func (d *BaseDao) GetManyByMany(m interface{}, filter map[string]interface{}) error {
 
 	f := bson.M{"model.deletedAt": nil}
 
@@ -147,7 +147,7 @@ func (d *modelDao) GetManyByMany(m interface{}, filter map[string]interface{}) e
 	}
 	return c.All(d.Ctx, m)
 }
-func (d *modelDao) All(m interface{}) error {
+func (d *BaseDao) All(m interface{}) error {
 	c, e := d.Begin().Find(d.Ctx, bson.M{"model.deletedAt": nil})
 	if e != nil {
 		return e
@@ -155,7 +155,7 @@ func (d *modelDao) All(m interface{}) error {
 	return c.All(d.Ctx, m)
 }
 
-func (m *modelDao) Begin() *mongo.Collection {
+func (m *BaseDao) Begin() *mongo.Collection {
 
 	return db.Collection(m.TableName)
 }
