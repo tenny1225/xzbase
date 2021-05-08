@@ -166,7 +166,7 @@ func writeJson(writer gin.ResponseWriter, obj response) {
 }
 
 
-func AddRoute(r *gin.Engine, i controller,s Service) {
+func AddRoute(r *gin.RouterGroup, i controller,s Service) {
 	o := reflect.ValueOf(i)
 	value := reflect.TypeOf(i)
 	elem:=value.Elem()
