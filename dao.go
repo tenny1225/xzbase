@@ -52,7 +52,16 @@ func (d *BaseDao) UpdateMany(id string, m interface{}) error {
 	d.ForceDelete(id)
 	return d.Create(m)
 }
+func (d *BaseDao) WhereUpdate(w map[string]interface{}, m map[string]interface{}) error {
+	m["model.updatedAt"] = time.Now()
+	where:=bson.M{}
+	for k,v:=range w{
+		where[k]=v
+	}
+	_, e := d.Begin().UpdateOne(d.Ctx, where, bson.M{"$set": m})
 
+	return e
+}
 func (d *BaseDao) Update(id string, m map[string]interface{}) error {
 	m["model.updatedAt"] = time.Now()
 	_, e := d.Begin().UpdateOne(d.Ctx, bson.M{"model.id": id}, bson.M{"$set": m})
