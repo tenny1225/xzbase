@@ -172,7 +172,10 @@ func AddRoute(r *gin.Engine, i controller,s Service) {
 	elem:=value.Elem()
 	if elem!=nil{
 		if _, ok := elem.FieldByName("Service"); ok &&s!=nil{
-			o.Elem().FieldByName("Service").Set(reflect.ValueOf(s).Elem())
+			values := reflect.ValueOf(s).Elem().Call(nil)
+			if values != nil && len(values) > 0 {
+				o.Elem().FieldByName("Service").Set(values[0])
+			}
 		}
 	}
 
