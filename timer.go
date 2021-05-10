@@ -9,7 +9,11 @@ type TaskTimer interface {
 
 var timers = make([]TaskTimer, 0)
 
-func Run() {
+func AddTimer(t TaskTimer)  {
+	timers = append(timers,t)
+}
+
+func StartTimer() {
 	for _, t := range timers {
 
 		go func(t TaskTimer) {

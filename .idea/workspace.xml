@@ -34,12 +34,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="259" />
+          <entry key="go" value="297" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="259" />
+          <entry key="Go" value="297" />
         </counts>
       </usages-collector>
     </session>
@@ -51,7 +51,7 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
@@ -95,11 +95,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dao.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="154" column="26" selection-start-line="154" selection-start-column="26" selection-end-line="154" selection-end-column="26" />
+            <state relative-caret-position="245">
+              <caret line="54" selection-start-line="54" selection-end-line="63" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -151,9 +151,9 @@
         <option value="$PROJECT_DIR$/service.go" />
         <option value="$PROJECT_DIR$/command/main.go" />
         <option value="$PROJECT_DIR$/model.go" />
-        <option value="$PROJECT_DIR$/dao.go" />
         <option value="$PROJECT_DIR$/controller.go" />
         <option value="$PROJECT_DIR$/router.go" />
+        <option value="$PROJECT_DIR$/dao.go" />
       </list>
     </option>
   </component>
@@ -246,7 +246,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.20860927" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.27593818" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -312,13 +312,6 @@
     <entry file="file://$PROJECT_DIR$/go.sum">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="154" column="26" selection-start-line="154" selection-start-column="26" selection-end-line="154" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -347,6 +340,13 @@
           <folding>
             <element signature="e#16#65#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="54" selection-start-line="54" selection-end-line="63" selection-end-column="1" />
         </state>
       </provider>
     </entry>
