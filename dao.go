@@ -17,6 +17,7 @@ type ModelDao interface {
 	Create(m interface{}) error
 	UpdateMany(id string, m interface{}) error
 	Update(id string, m map[string]interface{}) error
+	WhereUpdate(w map[string]interface{}, m map[string]interface{}) error
 	Inc(id string, m map[string]interface{}) error
 	Pull(id string, m map[string]interface{}) error
 	Push(id string, m map[string]interface{}) error
